@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.3'
+    id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+}
+
+group 'com.mbicycle'
+version '1.0.1'
+
+repositories {
+    mavenCentral()
+    maven {
+        url = uri("https://maven.pkg.github.com/Alexander-V-V/some-quite-useful-lib")
+        credentials {
+            username = "Alexander-V-V"
+            password = "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"
+        }
+    }
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+    implementation 'com.mbicycle:lib:1.0.4'
+    implementation 'org.springframework.boot:spring-boot-starter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "spring-boot-useful-lib-starter"
+            url = uri("https://maven.pkg.github.com/Alexander-V-V/test")
+            credentials {
+                username = "Alexander-V-V"
+                password = "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"
+            }
+        }
+
+        publications {
+            uniquePublication(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+}
